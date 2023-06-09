@@ -1,0 +1,34 @@
+# must pip install boto3 first!
+
+import boto3
+
+# Enter your AWS access key and secret access key here
+access_key = 'ENTERACCESSKEYHERE'
+secret_key = 'ENTERSECRETKEYHERE'
+
+# Create an MTurk client
+mturk_client = boto3.client(
+    'mturk',
+    aws_access_key_id=access_key,
+    aws_secret_access_key=secret_key,
+    region_name='us-east-1'  # Enter your desired AWS region
+)
+
+# Assign qualification to a worker
+def assign_qualification(worker_id, qualification_type_id, value=1):
+    mturk_client.associate_qualification_with_worker(
+        WorkerId=worker_id,
+        QualificationTypeId=qualification_type_id,
+        IntegerValue=value,
+        SendNotification=False  # Set to True to send a notification to the worker
+    )
+
+
+workers = [
+    "AXXXXXXXXX",
+    "AXXXXXXXXX",
+    "AXXXXXXXXX"
+]
+
+for i in range(0, len(workers)):
+    assign_qualification(workers[i], "ENTER_QUALIFICATION_ID_HERE")
